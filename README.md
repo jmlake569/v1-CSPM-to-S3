@@ -1,20 +1,20 @@
 # V1-CSPM-to-S3 Integration
 
-This project provides a secure and automated way to collect Conformity (cloud security and compliance) events and store them in Amazon S3 for further analysis or integration with other services.
+This project provides a secure and automated way to collect cloud security and compliance events and store them in Amazon S3 for further analysis or integration with other services.
 
 ## Architecture
 
 The solution consists of the following AWS resources:
-- **S3 Bucket**: Stores the Conformity events
+- **S3 Bucket**: Stores the CSPM events
 - **KMS Key**: Encrypts the data at rest (optional)
-- **SNS Topic**: Receives events from Conformity
+- **SNS Topic**: Receives events from Vision One CSPM
 - **Lambda Function**: Processes and stores the events (Python 3.11)
 - **Dead Letter Queue**: Handles failed message processing
 - **IAM Roles/Policies**: Manages permissions
 
 ## Data Flow
 
-1. Conformity sends security/compliance events to the SNS topic
+1. Vision One sends security/compliance events to the SNS topic
 2. The Lambda function receives these events
 3. The function formats the events as JSON arrays
 4. The formatted data is stored in S3 with timestamp-based filenames
@@ -57,7 +57,7 @@ After deployment, you'll need to:
 ## Outputs
 
 - `EventsBucket`: The S3 bucket name where events are stored
-- `TopicARN`: The SNS topic ARN to configure in Conformity dashboard
+- `TopicARN`: The SNS topic ARN to configure in Misconfigurations and Compliance dashboard in Vision One
 
 ## Security Features
 
@@ -83,7 +83,7 @@ This helps with:
 ## Lambda Function
 
 The Lambda function is written in Python 3.11 and handles:
-- Receiving SNS messages from Conformity
+- Receiving SNS messages from Vision One
 - Parsing and formatting JSON messages
 - Storing formatted data in S3 (with optional KMS encryption)
 
